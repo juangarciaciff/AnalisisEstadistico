@@ -93,15 +93,15 @@
 - Lo comprobaremos y, en su caso, la normalizaremos con una transformación logarítmica.
 - Mostramos gráficas para detectar visualmente la presencia de outliers y ver la forma de la distribución:
 
-    ![var_price_boxplot](./var_price_boxplot.png)
-    ![var_price_boxplot](./var_price_ggplot.png)
+    ![var_price_boxplot](./images/var_price_boxplot.png)
+    ![var_price_boxplot](./images/var_price_ggplot.png)
 
 - En las gráficas anteriores podemos observar que la variable está muy sesgada a la derecha y presenta muchos outliers.
 - Normalizamos la variable mediante transfomación logarítmica y la almacenaremos en una nueva variable en el dataset.
 - Mostramos de nuevo las gráficas para detectar visualmente los outliers y la forma de la distribución de la nueva variable:
 
-    ![var_price_boxplot_log](./var_price_boxplot_log.png)
-    ![var_price_boxplot_log](./var_price_ggplot_log.png)
+    ![var_price_boxplot_log](./images/var_price_boxplot_log.png)
+    ![var_price_boxplot_log](./images/var_price_ggplot_log.png)
 
 - En las gráficas anteriores vemos cómo La transformación logarítmica ha normalizado la distribución de price, aunque sigue presentando outliers a ambos lados y está algo sesgada a la derecha.
 
@@ -110,15 +110,15 @@
 - Al igual que hemos hecho con la variable price, vamos a determinar visualmente los outlaiers y la distribución de la variable sqft_living.
 - Mostramos gráficas para detectar visualmente la presencia de outliers y ver la forma de la distribución:
 
-    ![var_sqft_living_boxplot](./var_sqft_living_boxplot.png)
-    ![var_sqft_living_boxplot](./var_sqft_living_ggplot.png)
+    ![var_sqft_living_boxplot](./images/var_sqft_living_boxplot.png)
+    ![var_sqft_living_boxplot](./images/var_sqft_living_ggplot.png)
 
 - En las gráficas podemos observar que la variable está también muy sesgada a la derecha y presenta muchos outliers.
 - Normalizamos la variable mediante transfomación logarítmica y la almacenamos en una nueva variable en el dataset.
 - Mostramos de nuevo las gráficas para detectar visualmente los outliers y la forma de la distribución de la nueva variable:
 
-    ![var_sqft_living_boxplot_log](./var_sqft_living_boxplot_log.png)
-    ![var_sqft_living_boxplot_log](./var_sqft_living_ggplot_log.png)
+    ![var_sqft_living_boxplot_log](./images/var_sqft_living_boxplot_log.png)
+    ![var_sqft_living_boxplot_log](./images/var_sqft_living_ggplot_log.png)
 
 - La transformación logarítmica ha normalizado la distribución de sqft_living, aunque sigue presentando outliers a ambos lados y está algo sesgada a la derecha.
 
@@ -132,7 +132,7 @@
 - La regresión se hace en niveles; se estima el efecto marginal.
 - Interpretación del coeficiente estimado: un aumento de 1 unidad en sqft-living se corresponde con un aumento de beta unidades en price.
 
-    ![residuos_lm1](./residuos_lm1.png)
+    ![residuos_lm1](./images/residuos_lm1.png)
 
 - En el análisis de los residuos se puede ver que no se cumplen los supuestos de homogeneidad ni normalidad, por lo que la aplicación de OLS no es correcta.
 
@@ -142,7 +142,7 @@
 - La variable dependiente se expresa en logaritmos. Se conococe como semilelasticidad.
 - Interpretación del coeficiente estimado: un aumento de 1 unidad en sqft-living se corresponde con un aumento del 100*beta% en price.
 
-    ![residuos_lm2](./residuos_lm2.png)
+    ![residuos_lm2](./images/residuos_lm2.png)
 
 - En el análisis de los residuos parece verse que se cumplen los supuestos de normalidad y homogeneidad, aunque hay una gran presencia de outliers.
 - La hipótesis de linealidad también se cumple. R² = 0.48.
@@ -153,7 +153,7 @@
 - La variable independiente se expresa en logaritmos.
 - Interpretación del coeficiente estimado: un aumento del 1% en sqft-living se corresponde con un aumento de beta/100 unidades en price.
 
-    ![residuos_lm3](./residuos_lm3.png)
+    ![residuos_lm3](./images/residuos_lm3.png)
 
 - En el análisis de los residuos se puede ver que no se cumplen los supuestos de homogeneidad ni normalidad, por lo que la aplicación de OLS no es correcta.
 
@@ -163,7 +163,7 @@
 - Ambas variables, dependiente e independiente, se expresan en logaritmos. Se conoce como elasticidad constante.
 - Interpretación del coeficiente estimado: una variación del 1% en sqft_living se corresponde con una varición promedio en price de un beta 1%.
 
-    ![residuos_lm4](./residuos_lm4.png)
+    ![residuos_lm4](./images/residuos_lm4.png)
 
 - En el análisis de los residuos parece verse que se cumplen bastante bien los supuestos de normalidad y homogeneidad.
 - La hipótesis de linealidad también se cumple. R² = 0.45.
@@ -172,7 +172,7 @@
 
 - Podemos ver gráficamete que los modelos que mejor ajustan son el segundo y el cuarto, sobretodo el segundo.
 
-    ![comparativa_qqnorm.png](./comparativa_qqnorm.png)
+    ![comparativa_qqnorm.png](./images/comparativa_qqnorm.png)
 
 - Aún así, los compararmos mediante distintas métricas (R², AIC y BIC) para determinar cuantitativamente cual puede ser mejor, y vemos que el mejor es el modelo2.
 
@@ -184,7 +184,7 @@
 
 - Mostramos ahora en un gráfico la distribución y la recta de regresión con histogramas marginales.
 
-    ![ggMarginal](./ggMarginal.png)
+    ![ggMarginal](./images/ggMarginal.png)
 
 ***
 # 2.- Estimación del precio de venta de unos inmuebles de la cartera de la empresa
@@ -233,14 +233,14 @@
 - Excluiremos del modelo las siguientes variables: 
     - bedrooms y bathrooms: porque están muy correlacionadas con sqft_living (0.60 y 0.76) y entre sí (0.53).
 
-    ![ggpairs_interior.png](./ggpairs_interior.png)
+    ![ggpairs_interior.png](./images/ggpairs_interior.png)
 
 ### 2.1.2 Análisis de las variables relacionadas con el exterior de la vivienda: waterfront y view
 
 - Excluiremos del modelo las siguientes variables:
     - waterfront y view: porque su correlación con price es bastante baja.
 
-    ![ggpairs_exterior.png](./ggpairs_exterior.png)
+    ![ggpairs_exterior.png](./images/ggpairs_exterior.png)
 
 ### 2.1.3 Análisis de las variables relacionadas con medidas de superficie: sqft_living, sqft_lot, sqft_above, sqft_basement, sqft_living15, sqft_lot15
 
@@ -252,7 +252,7 @@
     - sqft-above: por su casi perfecta correlación con sqft-living (0.88)
     - basement: por su escasa correlación con price.
 
-    ![ggpairs_superficie.png](./ggpairs_superficie.png)
+    ![ggpairs_superficie.png](./images/ggpairs_superficie.png)
 
 ### 2.1.4 Análisis de las variables relacionadas con fechas: yr_built, yr_renovated, date
 
@@ -261,32 +261,34 @@
 - Excluiremos del modelo las siguientes variables: 
     - yr_built, yr_renovated y date: por su baja correlación con price.
 
-    ![ggpairs_fechas.png](./ggpairs_fechas.png)
+    ![ggpairs_fechas.png](./images/ggpairs_fechas.png)
 
 ### 2.1.5 Análisis de las variables relacionadas con la localización de la vivienda: zipcode, lat, long
 
 - Excluiremos del modelo las siguientes variables: 
     - Zipcode: porque tiene muchos niveles (70).
 
-    ![ggpairs_localizacion.png](./ggpairs_localizacion.png)
+    ![ggpairs_localizacion.png](./images/ggpairs_localizacion.png)
 
 ### 2.1.6 Análisis de las variables completamente desconocidas: condition, grade
 
 - Excluiremos del modelo las siguientes variables: 
     - condition: por su baja correlación con price.  
 
-    ![ggpairs_desconocidas.png](./ggpairs_desconocidas.png)
+    ![ggpairs_desconocidas.png](./images/ggpairs_desconocidas.png)
 
 
 ### 2.1.7 Creación del modelo
 
 - Creamos el modelo e inspeccionamos sus residuos.
 
-    ![modelo_train.png](./modelo_train.png)
+    ![modelo.png](./images/modelo.png)
 
 - Parecen cumplirse las hipotesis de normalidad y hommocedasticidad.
 
 - Hacemos la estimación robusta y vemos que no hay diferencias considerables entre los estimadores OLS y estimadores OLS robustos. Solo hay diferencias en los estimadores de bebrooms y bathrooms (y en el intercept).
+
+    ![modelo_r.png](./images/modelo_r.png)
 
 ### 2.1.8 Evalución del modelo comparando R adjusted en train y test
 

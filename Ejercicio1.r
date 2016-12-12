@@ -66,7 +66,7 @@ library(memisc)
 ### -------------------------------------------------------------------------
 ### -------------------------------------------------------------------------
 
-setwd("/home/juan/MASTER BIG DATA - CIFF/HERRAMIENTAS/ANÁLISIS ESTADÍSTICO/Ejercicio1")
+setwd("/home/juan/ciff/AnalisisEstadistico/AnalisisEstadistico")
 getwd()
 Ventas = read.csv("data/house_train.csv", stringsAsFactors=FALSE, sep=",")
 
@@ -539,7 +539,8 @@ dev.off()
 ### -------------------------------------------------------------------------
 
 Ventas2 <- Ventas
-variables_a_excluir <- c("id", "price", "bedrooms", "bathrooms", "sqft-living15", "sqft-lot15", "sqft-above", "yr_built", "yr_renovated", "renovated", "date", "waterfront", "view", "condition", "sqft_basement", "basement")
+variables_a_excluir <- c("id", "price", "bedrooms", "bathrooms", "sqft_living15", "sqft_lot15", "sqft_above", "yr_built", "yr_renovated", 
+                         "renovated", "date", "waterfront", "view", "condition", "sqft_basement", "basement", "sqft_living_log", "zipcode")
 Ventas2 <- Ventas2[ , !(names(Ventas2) %in% variables_a_excluir)]
 
 ### Creamos los conjuntos de entrenamiento y prueba
@@ -555,7 +556,7 @@ par(mfrow = c(2, 2))
 plot(modelo)
 
 dev.off()
-png("images/modelo_train.png")
+png("images/modelo.png")
 par(mfrow = c(2, 2))
 plot(modelo)
 dev.off()
@@ -565,12 +566,19 @@ dev.off()
 ### Hacemos la estimación robusta:
 modelo_r <- rlm(price_log~., data=Train)
 summary(modelo_r)
+par(mfrow = c(2, 2))
+plot(modelo_r)
+
+dev.off()
+png("images/modelo_r.png")
+par(mfrow = c(2, 2))
+plot(modelo_r)
+dev.off()
 
 coef(modelo)
 coef(modelo_r)
 
 # No hay diferencias considerables entre los estimadores OLS y estimadores OLS robustos, con la excepción de floors. El estimador de floors parece no converger, se ejecutará la regresión  Ridge.
-
 
 ### -------------------------------------------------------------------------
 ### Evaluamos el modelo comparando R adjusted en train y test
@@ -605,8 +613,9 @@ cor(traincor)
 
 # Como puede observarse hay correlaciones altas entre variables independientes. No se repiten los resultados, ya que se detallaron en el exploratorio.Cuando dos de los variables explicativas están muy correlacionados entre sí puede provocar el aumento de la Varianza del modelo y la no convergencia de los coeficientes asociados.
 
-
+### -------------------------------------------------------------------------
 ### Modelos Ridge y Lasso
+### -------------------------------------------------------------------------
 
 # Los modelos de Regresión Ridge y Lasso son modelo con coeficiente de regularización para evitar que los coeficientes tomen valores muy elevados. En nuestro caso, no tenemos coeficientes elevados en la estimacion OLS si en la estimación OLS robusta, no obstante como la matriz de correlaciones parece indicar que hay relaciones lineales altas entre variables independientes, vamos a proceder a su aplicación.
 
@@ -615,12 +624,11 @@ cor(traincor)
 # - Con Lasso se simplifica el modelo, pero se hunden los R2
 # - Como nuestros esimadores están cercanos a cero, se aplicará Ridge y no Lasso.
 
-
 ### -------------------------------------------------------------------------
 ### Regresión Ridge
 ### -------------------------------------------------------------------------
 
-variables <- c("bedrooms", "bathrooms", "sqft-living15", "sqft-lot15", "sqft-above", "yr_built", "yr_renovated", "renovated", "date", "waterfront", "view", "condition", "sqft_basement", "basement")
+variables <- c("sqft_living", "sqft_lot", "floors", "grade", "lat", "long")
 Lambda = 5
 Pruebas = 100
 Coeficientes = matrix(0, nrow=Pruebas, ncol=length(variables)+1)
@@ -639,7 +647,7 @@ for (i in 1:Pruebas) {
   SCE_TRAIN1_modeloRidge=c(SCE_TRAIN1_modeloRidge,sum((Train$price_log-prediccionesTrain)^2))
   STC_TRAIN1_modeloRidge=c(STC_TRAIN1_modeloRidge,sum((Train$price_log-mean(Train$price_log))^2))
   R2_TRAIN1_modeloRidge=c(R2_TRAIN1_modeloRidge,1-sum((Train$price_log-prediccionesTrain)^2)/sum((Train$price_log-mean(Train$price_log))^2))
-  
+
   prediccionesTest=predict(modelo_glmnet,newx = as.matrix(Test[,variables]))
   SCE_TEST1_modeloRidge=c(SCE_TEST1_modeloRidge,sum((Test$price_log-prediccionesTest)^2))
   STC_TEST1_modeloRidge=c(STC_TEST1_modeloRidge,sum((Test$price_log-mean(Test$price_log))^2))
@@ -655,7 +663,6 @@ for (i in 1:length(variables)){
 plot(R2_TRAIN1_modeloRidge,col="red",type="l", ylim=c(0,1))
 lines(R2_TEST1_modeloRidge,col="blue",type="l")
 
-
 max(R2_TEST1_modeloRidge)
 which(R2_TEST1_modeloRidge==max(R2_TEST1_modeloRidge))
 Caso=62
@@ -666,16 +673,10 @@ Coeficientes[Caso,]
 modelo_glmnet=glmnet(x=as.matrix(Train[,variables]),y=Train$price_log,lambda=Lambda*(Caso-1)/Pruebas,alpha=0)
 modelo_glmnet$beta
 
-
-# Tras la regresión Ridge, el R^2 se estabiliza en torno a 0.4.
+# Tras la regresión Ridge, el R^2 se estabiliza en torno a 0.3.
 
 R2_TRAIN1_modeloRidge[Caso]
 R2_TEST1_modeloRidge[Caso]
-
-# Comparando los coeficientes del OLS original con los obtenidos de la regresión Ridge, los coeficientes difieren bastante. Se ha corregido por multicolinealidad.
-
-coef(modelo)
-coef(modelo_glmnet)
 
 # Comparando los coeficientes del OLS original con los obtenidos de la regresión Ridge, los coeficientes difieren bastante. Se ha corregido por multicolinealidad.
 
@@ -693,17 +694,11 @@ y= Test$price_log
 mse<-(sum((y_hat-y)^2))/(nrow(Test))
 sprintf("MSE para el model Ridge: %f", mse)
 ggplot(data.frame(y_hat, y), aes(x=y_hat, y=y)) +
-  geom_point(color='blue') +
-  geom_abline(color='red', linetype=2) +
-  xlab("Predicted") +
-  ylab("Actual") +
-  ggtitle("Accuracy del Modelo Ridge")
-
-
-## -------------------------------------------------------------------------
-
-
-## -------------------------------------------------------------------------
+geom_point(color='blue') +
+geom_abline(color='red', linetype=2) +
+xlab("Predicted") +
+ylab("Actual") +
+ggtitle("Accuracy del Modelo Ridge")
 
 ### -------------------------------------------------------------------------
 ### Añadir columna de price al fichero house_test.csv
@@ -717,18 +712,10 @@ str(house_test)
 head(house_test)
 summary(house_test)
 
-
-house_test$basement <- (ifelse(house_test$sqft_basement==0,0,1))
-house_test$renovated <- (ifelse(house_test$yr_renovated==0,0,1))
-
 # Se necesita un model objeto para poder utilizar la función predict. Con los coeficientes estimados del modelo Ridge no es posible realizarlo, con esta funcíon, sin construir manualmente el vector. Podría realizarse con el modelo OLS, antes de corregir por colinealidad -aunque sabemos que algunos estimadres no son muy robustos. Y mediante una función inversa de log calcular el price.
 
-house_test$prediccionOLS==predict(modelo,newdata=house_test,type="response") #no la vamos a ejecutar  
-
-
 rcoefi<-coef(modelo_glmnet) # Alternativamente se construye un vector con los coeficientes de la regresíon Ridge
-ridgecoef<-c(0,rcoefi[2], rcoefi[3], rcoefi[4], rcoefi[5],rcoefi[6], rcoefi[7],rcoefi[8], 0, rcoefi[9], 0, 0, 0,0, rcoefi[10], rcoefi[11], rcoefi[12],0,0, rcoefi[13], rcoefi[14])
-
+ridgecoef<-c(0,0,0,rcoefi[2], rcoefi[3], rcoefi[4],0,0,0, rcoefi[5],0,0,0,0,0, rcoefi[6], rcoefi[7],0,0)
 
 # Multiplicación de matrices para la obtención de price en el data set house_test
 
@@ -738,14 +725,11 @@ intercept<-as.matrix((rep(rcoefi[1], nrow(house_test))))
 betas<-(as.matrix(house_test_prediction) %*% as.matrix(ridgecoef))
 price_log<-intercept+betas
 
-
-
 house_test$price=exp(price_log)
-
 
 write.csv(house_test, file = "data/house_test_withprices.csv")
 
+summary(house_test$price)
 
 ## -------------------------------------------------------------------------
-
 
