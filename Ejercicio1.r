@@ -68,7 +68,7 @@ library(memisc)
 
 setwd("/home/juan/MASTER BIG DATA - CIFF/HERRAMIENTAS/ANÁLISIS ESTADÍSTICO/Ejercicio1")
 getwd()
-Ventas = read.csv("house_train.csv", stringsAsFactors=FALSE, sep=",")
+Ventas = read.csv("data/house_train.csv", stringsAsFactors=FALSE, sep=",")
 
 ### -------------------------------------------------------------------------
 ### Descripción de datos:
@@ -111,10 +111,10 @@ boxplot(table(Ventas$price))
 ggplot(data=Ventas) + geom_histogram(aes(x=Ventas$price), fill = "black", color = "grey") + ggtitle("Price Distribution") + xlab("Price") + ylab("Frequency")
 
 dev.off()
-png("var_price_boxplot.png")
+png("images/var_price_boxplot.png")
 boxplot(table(Ventas$price))
 dev.off()
-png("var_price_ggplot.png")
+png("images/var_price_ggplot.png")
 ggplot(data=Ventas) + geom_histogram(aes(x=Ventas$price), fill = "black", color = "grey") + ggtitle("Price Distribution") + xlab("Price") + ylab("Frequency")
 dev.off()
 
@@ -127,10 +127,10 @@ boxplot(Ventas$price_log)
 ggplot(data=Ventas) + geom_histogram(aes(x=Ventas$price_log), fill = "black", color = "grey") + ggtitle("Price Distribution") + xlab("Price") + ylab("Frequency")
 
 dev.off()
-png("var_price_boxplot_log.png")
+png("images/var_price_boxplot_log.png")
 boxplot(Ventas$price_log)
 dev.off()
-png("var_price_ggplot_log.png")
+png("images/var_price_ggplot_log.png")
 ggplot(data=Ventas) + geom_histogram(aes(x=Ventas$price_log), fill = "black", color = "grey") + ggtitle("Price Distribution") + xlab("Price") + ylab("Frequency")
 dev.off()
 
@@ -147,10 +147,10 @@ boxplot(table(Ventas$sqft_living))
 ggplot(data=Ventas) + geom_histogram(aes(x=Ventas$sqft_living), fill = "black", color = "grey") + ggtitle("Sqft living Distribution") + xlab("Sqft living") + ylab("Frequency")
 
 dev.off()
-png("var_sqft_living_boxplot.png")
+png("images/var_sqft_living_boxplot.png")
 boxplot(table(Ventas$sqft_living))
 dev.off()
-png("var_sqft_living_ggplot.png")
+png("images/var_sqft_living_ggplot.png")
 ggplot(data=Ventas) + geom_histogram(aes(x=Ventas$sqft_living), fill = "black", color = "grey") + ggtitle("Sqft living Distribution") + xlab("Sqft living") + ylab("Frequency")
 dev.off()
 
@@ -163,10 +163,10 @@ boxplot(Ventas$sqft_living_log)
 ggplot(data=Ventas) + geom_histogram(aes(x=Ventas$sqft_living_log), fill = "black", color = "grey") + ggtitle("Price Distribution") + xlab("Price") + ylab("Frequency")
 
 dev.off()
-png("var_sqft_living_boxplot_log.png")
+png("images/var_sqft_living_boxplot_log.png")
 boxplot(Ventas$sqft_living_log)
 dev.off()
-png("var_sqft_living_ggplot_log.png")
+png("images/var_sqft_living_ggplot_log.png")
 ggplot(data=Ventas) + geom_histogram(aes(x=Ventas$sqft_living_log), fill = "black", color = "grey") + ggtitle("Price Distribution") + xlab("Price") + ylab("Frequency")
 dev.off()
 
@@ -203,7 +203,7 @@ qqnorm(modelo1$residuals); qqline(modelo1$residuals, col = 2)
 
 ### Exportamos a fichero las gráficas de análisis de residuos
 dev.off()
-png("residuos_lm1.png")
+png("images/residuos_lm1.png")
 par(mfrow = c(2, 2))
 plot(modelo1$residuals)
 smoothScatter(modelo1$residuals)
@@ -238,7 +238,7 @@ qqnorm(modelo2$residuals); qqline(modelo2$residuals, col = 2)
 
 ### Exportamos a fichero las gráficas de análisis de residuos
 dev.off()
-png("residuos_lm2.png")
+png("images/residuos_lm2.png")
 par(mfrow = c(2, 2))
 plot(modelo2$residuals)
 smoothScatter(modelo2$residuals)
@@ -272,7 +272,7 @@ qqnorm(modelo3$residuals); qqline(modelo3$residuals, col = 2)
 
 ### Exportamos a fichero las gráficas de análisis de residuos
 dev.off()
-png("residuos_lm3.png")
+png("images/residuos_lm3.png")
 par(mfrow = c(2, 2))
 plot(modelo3$residuals)
 smoothScatter(modelo3$residuals)
@@ -307,7 +307,7 @@ qqnorm(modelo4$residuals); qqline(modelo4$residuals, col = 2)
 
 ### Exportamos a fichero las gráficas de análisis de residuos
 dev.off()
-png("residuos_lm4.png")
+png("images/residuos_lm4.png")
 par(mfrow = c(2, 2))
 plot(modelo4$residuals)
 smoothScatter(modelo4$residuals)
@@ -329,7 +329,7 @@ qqnorm(modelo3$residuals, main='Normal Q-Q Plot - Modelo 3'); qqline(modelo3$res
 qqnorm(modelo4$residuals, main='Normal Q-Q Plot - Modelo 4'); qqline(modelo4$residuals, col = 2)
 
 dev.off()
-png("comparativa_qqnorm.png")
+png("images/comparativa_qqnorm.png")
 par(mfrow = c(2, 2))
 qqnorm(modelo1$residuals, main='Normal Q-Q Plot - Modelo 1'); qqline(modelo1$residuals, col = 2)
 qqnorm(modelo2$residuals, main='Normal Q-Q Plot - Modelo 2'); qqline(modelo2$residuals, col = 2)
@@ -365,7 +365,7 @@ plot_center = ggplot(Ventas, aes(x=sqft_living, y=price_log)) + geom_point() + g
 ggMarginal(plot_center, type="histogram")
 
 dev.off()
-png("ggMarginal.png")
+png("images/ggMarginal.png")
 plot_center = ggplot(Ventas, aes(x=sqft_living, y=price_log)) + geom_point() + geom_smooth(method="lm")
 ggMarginal(plot_center, type="histogram")
 dev.off()
@@ -430,7 +430,7 @@ table(Ventas$fllors)
 ggpairs(Ventas[, c("bedrooms", "bathrooms", "floors", "sqft_living", "price")])
 
 dev.off()
-png("ggpairs_interior.png")
+png("images/ggpairs_interior.png")
 ggpairs(Ventas[, c("bedrooms", "bathrooms", "floors", "sqft_living", "price")])
 dev.off()
 
@@ -446,7 +446,7 @@ table(Ventas$view)
 ggpairs(Ventas[, c("waterfront", "view", "price")])
 
 dev.off()
-png("ggpairs_exterior.png")
+png("images/ggpairs_exterior.png")
 ggpairs(Ventas[, c("waterfront", "view", "price")])
 dev.off()
 
@@ -468,7 +468,7 @@ Ventas$basement<-(ifelse(Ventas$sqft_basement==0,0,1))
 
 ggpairs(Ventas[, c("sqft_lot", "sqft_above", "basement", "sqft_living15", "sqft_lot15", "sqft_living", "price")])
 dev.off()
-png("ggpairs_superficie.png")
+png("images/ggpairs_superficie.png")
 ggpairs(Ventas[, c("sqft_lot", "sqft_above", "basement", "sqft_living15", "sqft_lot15", "sqft_living", "price")])
 dev.off()
 
@@ -494,7 +494,7 @@ Ventas$renovated<-(ifelse(Ventas$yr_renovated==0,0,1))
 
 ggpairs(Ventas[, c("yr_built", "renovated", "date", "price")])
 dev.off()
-png("ggpairs_fechas.png")
+png("images/ggpairs_fechas.png")
 ggpairs(Ventas[, c("yr_built", "renovated", "date", "price")])
 dev.off()
 
@@ -511,7 +511,7 @@ table(Ventas$long)
 ggpairs(Ventas[, c("zipcode", "lat", "long", "price")])
 
 dev.off()
-png("ggpairs_localizacion.png")
+png("images/ggpairs_localizacion.png")
 ggpairs(Ventas[, c("zipcode", "lat", "long", "price")])
 dev.off()
 
@@ -527,7 +527,7 @@ table(Ventas$grade)
 ggpairs(Ventas[, c("condition", "grade", "price")])
 
 dev.off()
-png("ggpairs_desconocidas.png")
+png("images/ggpairs_desconocidas.png")
 ggpairs(Ventas[, c("condition", "grade", "price")])
 dev.off()
 
@@ -555,7 +555,7 @@ par(mfrow = c(2, 2))
 plot(modelo)
 
 dev.off()
-png("modelo_train.png")
+png("images/modelo_train.png")
 par(mfrow = c(2, 2))
 plot(modelo)
 dev.off()
@@ -710,7 +710,7 @@ ggplot(data.frame(y_hat, y), aes(x=y_hat, y=y)) +
 ### -------------------------------------------------------------------------
 
 # Cargamos los datos
-house_test = read.csv("house_test.csv", stringsAsFactors=FALSE, sep=",")
+house_test = read.csv("data/house_test.csv", stringsAsFactors=FALSE, sep=",")
 
 # Revisamos los datos cargados
 str(house_test)
@@ -743,7 +743,7 @@ price_log<-intercept+betas
 house_test$price=exp(price_log)
 
 
-write.csv(house_test, file = "House_test_withprices.csv")
+write.csv(house_test, file = "data/house_test_withprices.csv")
 
 
 ## -------------------------------------------------------------------------
