@@ -176,7 +176,7 @@ plot(1:20, vector, type='l', xlab="Valor de p en modelos AR(p)", ylab="AICC")
 dev.off()
 
 # Encontramos mínimos locales en los valores de p = 2, 4, 7 y 13.
-# Tomaremos como hipótesis de trabajo los modelos AR(2), AR(4), AR(7), AR(13) o ARMA(p,q).
+# Tomaremos como hipótesis de trabajo los modelos AR(2), AR(4), AR(7), AR(13).
 
 ### -------------------------------------------------------------------------
 ### Modelo AR(2):

@@ -5,11 +5,11 @@
 ***
 # Introducción
 
-El análisis clásico de las **series temporales** se basa en la suposición de que los valores medidos de la variable de observación son consecuencia de los tres componentes que se indican a continuación, los dos primeros determinítricos y el tercero aleatorio:
+El análisis clásico de las **series temporales** se basa en la suposición de que los valores medidos de la variable de observación son consecuencia de los tres componentes que se indican a continuación, los dos primeros determinísticos y el tercero aleatorio:
 
 - Componente **tendencia**: Se puede definir como un cambio a largo plazo que se produce en la relación al nivel medio, o el cambio a largo plazo de la media. La tendencia se identifica con un movimiento suave de la serie a largo plazo.
 
-- Componente **estacional**: Muchas series temporales presentan cierta periodicidad, variación de cierto período (semestral, mensual, etc.). Estos efectos son fáciles de entender y se pueden medir explícitamente o incluso se pueden eliminar de la serie de datos, a este proceso se le llama desestacionalizaciónde la serie.
+- Componente **estacional**: Muchas series temporales presentan cierta periodicidad, variación de cierto período (semestral, mensual, etc.). Estos efectos son fáciles de entender y se pueden medir explícitamente o incluso se pueden eliminar de la serie de datos, a este proceso se le llama desestacionalización de la serie.
 
 - Componente **aleatoria**: Esta componente no responde a ningún patrón de comportamiento, sino que es el resultado de factores fortuitos o aleatorios que inciden de forma aislada en una serie de tiempo.
 
@@ -18,7 +18,7 @@ Las series temporales se pueden clasificar en:
 - **Estacionarias**: cuando es estable a lo largo del tiempo, es decir, cuando la media y varianza son constantes en el tiempo.
 Esto se refleja gráficamente en que los valores de la serie tienden a oscilar alrededor de una media constante y la variabilidad con respecto a esa media también permanece constante en el tiempo.
 
-- **No estacionarias**: cuando la tendencia y/o variabilidad cambian en el tiempo. Los cambios en la media determinan una tendenciaa creciente o decreciente a largo plazo, por lo que la serie no oscila alrededor de un valor constante.
+- **No estacionarias**: cuando la tendencia y/o variabilidad cambian en el tiempo. Los cambios en la media determinan una tendenci creciente o decreciente a largo plazo, por lo que la serie no oscila alrededor de un valor constante.
 
 En el proceso de predicción de series temporales podemos identificar los siguientes pasos:
 
@@ -60,7 +60,7 @@ Comprobamos que los datos tienen componente de estacionalidad y la eliminamos:
 
 Comprobamos en la gráfica de la componente de estacionalidad que aparecen claramente picos en los meses de mayo y enero principalmente.
 
-Tras eliminar la componente estacional vuemos que la gráfica de la nueva serie resultante sigue presentando tendencia ascendente.
+Tras eliminar la componente estacional vemos que la gráfica de la nueva serie resultante sigue presentando tendencia ascendente.
 
 ## 2.2 Tendencia
 
@@ -82,7 +82,7 @@ La **Función de autocorrelación (ACF)** mide la correlación entre dos variabl
 
 La **Función de Autocorrelación Parcial (PACF)** mide la correlación entre dos variables separadas por k periodos cuando no se considera la dependencia creada por los retardos intermedios existentes entre ambas.
 
-Existe también la **Prueba de Ljung-Box**, que permite probar en forma conjunta que todos los coeficientes de autocorrelación son simultáneamente iguales a cero, esdecir, que son independientes.
+Existe también la **Prueba de Ljung-Box**, que permite probar en forma conjunta que todos los coeficientes de autocorrelación son simultáneamente iguales a cero, es decir, que son independientes.
 
 Sobre los datos desprovistos de componentes de estacionalidad y tendencia aplicamos las funciones de autocorrelación ACF y PACF.
 
@@ -90,9 +90,9 @@ Sobre los datos desprovistos de componentes de estacionalidad y tendencia aplica
 
 En la gráfica de autocorrelación total (ACF) podemos ver cómo los valores no nulos iniciales se van amortiguando a lo largo del tiempo.
 
-En la grafica de la autocorrelación parcial (PACF) se puede ver un valor no nulo destacable al inicio.
+En la gráfica de la autocorrelación parcial (PACF) se puede ver un valor no nulo destacable al inicio.
 
-## 3._ Modelos ARMA
+## 3.2 Modelos ARMA
 
 - **Procesos autorregresivos (AR)**: son procesos ARMA(p,q) en los que q=0, por lo que podemos denotarlos como AR(p).
 
@@ -111,7 +111,7 @@ Mostramos una gráfica con el valor de AICC para los 20 primeros valores de p:
 
 Encontramos mínimos locales en los valores de p = 2, 4, 7 y 13.
 
-Tomaremos como hipótesis de trabajo los modelos AR(2), AR(4), AR(7), AR(13) o ARMA(p,q).
+Tomaremos como hipótesis de trabajo los modelos AR(2), AR(4), AR(7), AR(13).
 
 **Modelo AR(2), proceso autoregresivo de orden 2**:
 
@@ -253,7 +253,7 @@ Pasa todos los test.
 
 Pasa todos los test.
 
-# 4. Preducción
+# 4. Predicción
 
 Utilizando el modelo AR(7) mejorado obtenemos la siguiente predicción para los 24 meses siguientes:
 
